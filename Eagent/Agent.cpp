@@ -135,7 +135,7 @@ STDMETHODIMP CAgent::Invoke(
 
 //
 // Make sure the page is what I want to hack. Leave others alone.
-// This page must have <img id='imgcode'> and <input id='imagenumberrefresh'>.
+// This page must have <img id='imgcode'> and <a id='imagenumberrefresh'>.
 //
 bool VerifyTarget(IHTMLDocument2* pDoc2)
 {
@@ -275,42 +275,6 @@ void CAgent::HackIt(BSTR bstrUrl, IDispatch* pWindow)
 
 	AddScript(spMyHTML, m_bstrScript);
 	hr = pMyBody->insertAdjacentHTML(L"afterBegin", m_bstrHtml);
-//	if (FAILED(hr))
-//		return;
-
-	/* Begin: Dump
-	// Get the HTML source AFTER insertion
-	BSTR bstrHTMLText2;
-	hr = pMyBody->get_outerHTML(&bstrHTMLText2);
-	if (FAILED(hr))
-		return;
-	LPCTSTR strHTMLText2 = OLE2T(bstrHTMLText2);
-
-	{
-		BSTR bstrLocationURL;
-		LPCTSTR szLocationURL = _T("");
-		hr = m_spWebBrowser2->get_LocationURL(&bstrLocationURL);
-		if (FAILED(hr))
-			return;
-		szLocationURL = OLE2CT(bstrLocationURL);
-		if ( _tcscmp(pszUrl,szLocationURL) == 0 )	// I'm in the top level
-		{
-			TCHAR fn[MAX_PATH];
-			TCHAR fname[MAX_PATH];
-			GetModuleFileName(_Module.m_hInst, fn, MAX_PATH);
-			GetLongPathName(fn, fname, MAX_PATH);
-			_tcscat(fname, _T(".after.htm"));
-
-			//FILE *fp1 = fopen("D:\\Lab\\BHO\\iehelper\\TMP\\before.htm", "wb");
-			FILE *fp2 = fopen(fname, "wb");
-			if ( fp2 )
-			{
-				fwrite(strHTMLText2, 1, strlen(strHTMLText2), fp2);
-				fclose(fp2);
-			}
-		}
-	}
-	End: Dump */
 }
 
 void CAgent::LoadFile(LPCTSTR ext, CComBSTR &bstrText, FILETIME &ftText)
